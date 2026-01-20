@@ -1,0 +1,36 @@
+# Установить поведение по умолчанию для автоматического нормализации окончаний строк
+* text=auto
+
+# Явно объявить файлы текста, которые вы хотите всегда нормализовать и преобразовать
+# в нативные окончания строк при коммите
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.conf text eol=lf
+
+# Объявить файлы, которые всегда должны иметь CRLF окончания строк на checkout
+*.bat text eol=crlf
+
+# Объявить файлы, которые всегда должны иметь LF окончания строк на checkout
+*.sh text eol=lf
+
+# Обозначить файлы, которые являются бинарными (все файлы, являющиеся
+# бинарными файлами, перечислены ниже явно)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+
