@@ -109,6 +109,14 @@ docker-compose logs -f
 npm install
 ```
 
+### Настройка переменных окружения
+
+Для локальной разработки создайте файл `.env` в корне проекта. Приложение использует следующие переменные окружения:
+
+```bash
+VITE_API_BASE_URL=https://gocrm.gruzoperevozki-rf.com
+```
+
 ### Запуск dev сервера
 ```bash
 npm run dev
