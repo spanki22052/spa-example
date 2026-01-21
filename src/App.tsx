@@ -1,6 +1,6 @@
 import React from "react"
 import { Routes, Route, Navigate } from "react-router-dom"
-import { LoginForm } from "./pages/login/LoginForm"
+import { AuthPage } from "./pages/auth/AuthPage"
 import { OrdersPage } from "./pages/orders/OrdersPage"
 import { CRMPage } from "./pages/crm/CRMPage"
 import { NotFoundPage } from "./pages/notFound/NotFoundPage"
@@ -10,7 +10,7 @@ import { ProtectedRoute } from "./components/protectedRoute/ProtectedRoute"
 export const App: React.FC = () => {
   return (
     <Routes>
-      <Route path="/login" element={<LoginForm />} />
+      <Route path="/login" element={<AuthPage />} />
       <Route
         element={
           <ProtectedRoute>

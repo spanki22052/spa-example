@@ -4,6 +4,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons"
 import * as Styled from "./styled"
 import { useLoginForm } from "./useLoginForm"
 import type { LoginFormValues } from "./types"
+import { PASSWORD_VALIDATION_RULES } from "./constants"
 
 export const LoginForm: React.FC = () => {
   const { loading, errors, handleSubmit } = useLoginForm()
@@ -47,16 +48,7 @@ export const LoginForm: React.FC = () => {
             name="password"
             validateStatus={errors.password ? "error" : ""}
             help={errors.password}
-            rules={[
-              {
-                required: true,
-                message: "Введите пароль"
-              },
-              {
-                min: 8,
-                message: "Пароль должен содержать минимум 8 символов"
-              }
-            ]}
+            rules={PASSWORD_VALIDATION_RULES}
           >
             <Input.Password
               prefix={<LockOutlined />}
