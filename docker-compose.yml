@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: spa-example
     ports:
-      - "8080:80"
+      - "8080:8080"
     restart: unless-stopped
     environment:
       - NODE_ENV=production
