@@ -9,7 +9,8 @@ export const IdCell = styled.span({
 export const ClientContainer = styled.div({
   display: "flex",
   alignItems: "center",
-  gap: "8px"
+  gap: "8px",
+  cursor: "pointer"
 })
 
 export const ClientInfo = styled.div({
@@ -18,12 +19,17 @@ export const ClientInfo = styled.div({
 })
 
 export const ClientName = styled.span({
-  fontWeight: 500
+  fontWeight: 500,
+  color: "#1677ff",
+  textDecoration: "underline"
 })
 
 export const ClientPhone = styled.span({
-  fontSize: "12px",
-  opacity: 0.7
+  fontSize: "14px",
+  fontWeight: 500,
+  color: "#1677ff",
+  textDecoration: "underline",
+  cursor: "pointer"
 })
 
 export const RouteContainer = styled.div({
@@ -96,4 +102,5 @@ export const TransportTag = styled(Tag)({
   color: "#1677ff",
   border: "1px solid rgba(22, 119, 255, 0.3)"
 })
+
 

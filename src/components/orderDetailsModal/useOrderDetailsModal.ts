@@ -1,6 +1,8 @@
-import { useCallback } from "react"
+import { useCallback, useMemo } from "react"
+import type { OrderDate } from "../../@types/orders"
+import type { FormattedOrderDate } from "./types"
 
-export const useOrderDetailsModal = () => {
+export const useOrderDetailsModal = (orderDate?: OrderDate, phoneNumber?: string) => {
   const formatDate = useCallback((dateString: string): string => {
     if (!dateString) return ""
     
@@ -32,7 +34,7 @@ export const useOrderDetailsModal = () => {
     return dateString
   }, [])
 
-  const formatOrderDate = useCallback((orderDate: { type: "urgent" | "nonUrgent"; urgentDate: string; nonUrgentStartDate: string; nonUrgentEndDate: string }): { text: string; isUrgent: boolean; dateRange?: string } => {
+  const formatOrderDate = useCallback((orderDate: OrderDate): FormattedOrderDate => {
     if (orderDate.type === "urgent" && orderDate.urgentDate) {
       const parsedDate = parseDateString(orderDate.urgentDate)
       return {
@@ -55,9 +57,31 @@ export const useOrderDetailsModal = () => {
     }
   }, [parseDateString])
 
+  const orderDateInfo = useMemo(() => {
+    if (!orderDate) {
+      return { text: "Не указано", isUrgent: false }
+    }
+    return formatOrderDate(orderDate)
+  }, [orderDate, formatOrderDate])
+
+  const handleCallClick = useCallback(() => {
+    if (!phoneNumber) return
+    window.open(`tel:${phoneNumber}`, "_self")
+  }, [phoneNumber])
+
+  const handleWhatsappClick = useCallback(() => {
+    if (!phoneNumber) return
+    const digitsOnly = phoneNumber.replace(/\D/g, "")
+    if (!digitsOnly) return
+    window.open(`https://wa.me/${digitsOnly}`, "_blank")
+  }, [phoneNumber])
+
   return {
     formatDate,
-    formatOrderDate
+    formatOrderDate,
+    orderDateInfo,
+    handleCallClick,
+    handleWhatsappClick
   }
 }
 

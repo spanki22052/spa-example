@@ -37,35 +37,66 @@ export const MainContent = styled.div<{ $sidebarCollapsed: boolean }>(({ $sideba
   }
 }))
 
-export const MobileMenuButton = styled.button(({ theme }) => ({
+export const MobileMenuButton = styled.button<{ $collapsed: boolean }>(({ theme, $collapsed }) => ({
   display: "none",
   "@media (max-width: 768px)": {
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    gap: "5px",
     position: "fixed",
     top: "16px",
-    left: "16px",
+    right: "16px",
     width: "48px",
     height: "48px",
     borderRadius: "12px",
-    backgroundColor: theme.colors.surface,
-    border: `1px solid ${theme.colors.border}`,
-    color: theme.colors.text,
+    backgroundColor: "transparent",
+    border: "none",
     cursor: "pointer",
     zIndex: 998,
-    fontSize: "20px",
+    padding: "12px",
     transition: "all 0.3s ease",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+    "& span": {
+      display: "block",
+      width: "24px",
+      height: "2px",
+      backgroundColor: theme.colors.primary,
+      borderRadius: "2px",
+      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      transformOrigin: "center"
+    },
     "&:hover": {
-      backgroundColor: theme.colors.surfaceHover,
-      borderColor: theme.colors.primary,
-      color: theme.colors.primary,
-      transform: "scale(1.05)"
+      transform: "scale(1.05)",
+      "& span": {
+        backgroundColor: theme.colors.primaryHover
+      }
     },
     "&:active": {
       transform: "scale(0.95)"
     }
   }
 }))
+
+export const BurgerLine = styled.span<{ $collapsed: boolean; $line: 1 | 2 | 3 }>(({ $collapsed, $line }) => {
+  if (!$collapsed) {
+    if ($line === 1) {
+      return {
+        transform: "rotate(45deg) translate(6px, 6px)"
+      }
+    }
+    if ($line === 2) {
+      return {
+        opacity: 0,
+        transform: "scaleX(0)"
+      }
+    }
+    if ($line === 3) {
+      return {
+        transform: "rotate(-45deg) translate(6px, -6px)"
+      }
+    }
+  }
+  return {}
+})
 

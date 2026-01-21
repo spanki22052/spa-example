@@ -1,5 +1,5 @@
 import React from "react"
-import { MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined, SunOutlined, MoonOutlined } from "@ant-design/icons"
+import { LeftOutlined, LogoutOutlined, SunOutlined, MoonOutlined } from "@ant-design/icons"
 import * as Styled from "./styled"
 import type { SidebarProps } from "./types"
 import { useSidebar } from "./useSidebar"
@@ -19,12 +19,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, menuItems, onToggle
         onMouseLeave={handleMouseLeave}
       >
         <Styled.SidebarHeader>
-          <Styled.SidebarLogo $collapsed={collapsed} $isHovered={isHovered}>
-            <div>CRM</div>
-          </Styled.SidebarLogo>
-          <Styled.SidebarTitle $collapsed={collapsed} $isHovered={isHovered}>
-            CRM System
-          </Styled.SidebarTitle>
+          <Styled.SidebarHeaderMain>
+            <Styled.SidebarLogo $collapsed={collapsed} $isHovered={isHovered}>
+              <div>CRM</div>
+            </Styled.SidebarLogo>
+            <Styled.SidebarTitle $collapsed={collapsed} $isHovered={isHovered}>
+              CRM System
+            </Styled.SidebarTitle>
+          </Styled.SidebarHeaderMain>
+          <Styled.SidebarCollapseButton $collapsed={collapsed} $isHovered={isHovered} onClick={onToggle}>
+            <LeftOutlined />
+          </Styled.SidebarCollapseButton>
         </Styled.SidebarHeader>
         <Styled.SidebarContent>
           {menuItems.map((item) => (
@@ -43,21 +48,31 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, menuItems, onToggle
               </Styled.MenuItemLabel>
             </Styled.MenuItem>
           ))}
-        </Styled.SidebarContent>
-        <Styled.SidebarFooter>
-          <Styled.ThemeToggleButton onClick={toggleTheme} $collapsed={collapsed} $isHovered={isHovered}>
+          <Styled.MenuItem
+            $collapsed={collapsed}
+            $isHovered={isHovered}
+            $active={false}
+            $isLogout={false}
+            onClick={toggleTheme}
+          >
             {themeMode === "dark" ? <SunOutlined /> : <MoonOutlined />}
-            <span>{themeMode === "dark" ? "Светлая тема" : "Темная тема"}</span>
-          </Styled.ThemeToggleButton>
-          <Styled.ToggleButton onClick={onToggle} $collapsed={collapsed} $isHovered={isHovered}>
-            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            <span>Свернуть</span>
-          </Styled.ToggleButton>
-          <Styled.LogoutButton onClick={onLogout} $collapsed={collapsed} $isHovered={isHovered}>
+            <Styled.MenuItemLabel $collapsed={collapsed} $isHovered={isHovered}>
+              {themeMode === "dark" ? "Светлая тема" : "Темная тема"}
+            </Styled.MenuItemLabel>
+          </Styled.MenuItem>
+          <Styled.MenuItem
+            $collapsed={collapsed}
+            $isHovered={isHovered}
+            $active={false}
+            $isLogout={true}
+            onClick={onLogout}
+          >
             <LogoutOutlined />
-            <span>Выйти</span>
-          </Styled.LogoutButton>
-        </Styled.SidebarFooter>
+            <Styled.MenuItemLabel $collapsed={collapsed} $isHovered={isHovered}>
+              Выйти
+            </Styled.MenuItemLabel>
+          </Styled.MenuItem>
+        </Styled.SidebarContent>
       </Styled.SidebarContainer>
     </>
   )

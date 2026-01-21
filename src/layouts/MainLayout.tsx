@@ -1,18 +1,10 @@
 import React from "react"
-import { Outlet, useLocation, useNavigate } from "react-router-dom"
-import { HomeOutlined, AppstoreOutlined, UserOutlined, SettingOutlined, MenuOutlined } from "@ant-design/icons"
+import { Outlet } from "react-router-dom"
 import { Sidebar } from "@components/sidebar/Sidebar"
-import type { MenuItemData } from "@components/sidebar/types"
 import { useMainLayout } from "./useMainLayout"
 import * as Styled from "./styled"
 import type { MainLayoutProps } from "./types"
-
-const menuItems: MenuItemData[] = [
-  { key: "home", label: "Главная", icon: <HomeOutlined />, path: "/crm" },
-  { key: "orders", label: "Заказы", icon: <AppstoreOutlined />, path: "/orders" },
-  { key: "clients", label: "Клиенты", icon: <UserOutlined />, path: "/crm/clients" },
-  { key: "settings", label: "Настройки", icon: <SettingOutlined />, path: "/crm/settings" }
-]
+import { menuItems } from "./constants"
 
 export const MainLayout: React.FC<MainLayoutProps> = () => {
   const { sidebarCollapsed, toggleSidebar, handleMenuClick, isActiveRoute, handleLogout, isMobile } = useMainLayout()
@@ -29,8 +21,10 @@ export const MainLayout: React.FC<MainLayoutProps> = () => {
       />
       <Styled.MainContent $sidebarCollapsed={sidebarCollapsed}>
         {isMobile && (
-          <Styled.MobileMenuButton onClick={toggleSidebar}>
-            <MenuOutlined />
+          <Styled.MobileMenuButton $collapsed={sidebarCollapsed} onClick={toggleSidebar}>
+            <Styled.BurgerLine $collapsed={sidebarCollapsed} $line={1} />
+            <Styled.BurgerLine $collapsed={sidebarCollapsed} $line={2} />
+            <Styled.BurgerLine $collapsed={sidebarCollapsed} $line={3} />
           </Styled.MobileMenuButton>
         )}
         <Outlet />

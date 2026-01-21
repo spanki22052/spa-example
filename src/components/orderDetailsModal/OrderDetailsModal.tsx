@@ -1,31 +1,25 @@
 import React from "react"
 import {
-  UserOutlined,
-  EnvironmentOutlined,
-  InboxOutlined,
-  CarOutlined,
   ClockCircleOutlined,
-  FileTextOutlined
+  PhoneOutlined,
+  WhatsAppOutlined
 } from "@ant-design/icons"
 import * as Styled from "./styled"
 import { useOrderDetailsModal } from "./useOrderDetailsModal"
 import type { OrderDetailsModalProps } from "./types"
 
 export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({ order, open, onClose }) => {
-  const { formatDate, formatOrderDate } = useOrderDetailsModal()
-
   if (!order) {
     return null
   }
 
-  const { json, status, createdat, id } = order
-  console.log(order)
+  const { json, status } = order
 
-  const orderDateInfo = formatOrderDate(json.orderDate)
+  const { orderDateInfo, handleCallClick, handleWhatsappClick } = useOrderDetailsModal(json.orderDate, json.phoneNumber)
 
   return (
     <Styled.StyledModal
-      title={`Детали заказа #${id}`}
+      title={json.name}
       open={open}
       onCancel={onClose}
       footer={null}
@@ -34,52 +28,38 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({ order, ope
     >
       <Styled.Section>
         <Styled.SectionHeader>
-          <Styled.SectionIcon>
-            <FileTextOutlined />
-          </Styled.SectionIcon>
-          <Styled.SectionTitle>Основная информация</Styled.SectionTitle>
+          <Styled.SectionTitle>Клиент</Styled.SectionTitle>
         </Styled.SectionHeader>
-        <Styled.InfoGrid>
-          <Styled.InfoItem>
-            <Styled.InfoLabel>ID заказа</Styled.InfoLabel>
-            <Styled.InfoValue>#{id}</Styled.InfoValue>
-          </Styled.InfoItem>
-          <Styled.InfoItem>
-            <Styled.InfoLabel>Статус</Styled.InfoLabel>
-            <Styled.InfoValue>
-              <Styled.StatusTag $status={status}>{status}</Styled.StatusTag>
-            </Styled.InfoValue>
-          </Styled.InfoItem>
-          <Styled.InfoItem>
-            <Styled.InfoLabel>Дата создания</Styled.InfoLabel>
-            <Styled.InfoValue>{formatDate(createdat)}</Styled.InfoValue>
-          </Styled.InfoItem>
-        </Styled.InfoGrid>
-      </Styled.Section>
 
-      <Styled.Section>
-        <Styled.SectionHeader>
-          <Styled.SectionIcon>
-            <UserOutlined />
-          </Styled.SectionIcon>
-          <Styled.SectionTitle>Информация о клиенте</Styled.SectionTitle>
-        </Styled.SectionHeader>
+        <Styled.ClientHeader>
+          <Styled.ClientMainInfo>
+            <Styled.ClientName>{json.name}</Styled.ClientName>
+            <Styled.ClientMeta>
+              {json.clientType === "natural" ? "Физическое лицо" : "Юридическое лицо"}
+            </Styled.ClientMeta>
+          </Styled.ClientMainInfo>
+        </Styled.ClientHeader>
+
         <Styled.InfoGrid>
-          <Styled.InfoItem>
-            <Styled.InfoLabel>Имя</Styled.InfoLabel>
-            <Styled.InfoValue>{json.name}</Styled.InfoValue>
-          </Styled.InfoItem>
-          <Styled.InfoItem>
-            <Styled.InfoLabel>Тип клиента</Styled.InfoLabel>
-            <Styled.InfoValue>{json.clientType === "natural" ? "Физическое лицо" : "Юридическое лицо"}</Styled.InfoValue>
-          </Styled.InfoItem>
           <Styled.InfoItem>
             <Styled.InfoLabel>Телефон</Styled.InfoLabel>
-            <Styled.InfoValue>{json.phoneNumber}</Styled.InfoValue>
+            <Styled.PhoneRow>
+              <Styled.InfoValue>{json.phoneNumber || "Не указан"}</Styled.InfoValue>
+              {json.phoneNumber && (
+                <Styled.ClientActions>
+                  <Styled.CircleIconButton type="button" onClick={handleCallClick}>
+                    <PhoneOutlined />
+                  </Styled.CircleIconButton>
+                  <Styled.CircleIconButton type="button" onClick={handleWhatsappClick}>
+                    <WhatsAppOutlined />
+                  </Styled.CircleIconButton>
+                </Styled.ClientActions>
+              )}
+            </Styled.PhoneRow>
           </Styled.InfoItem>
           <Styled.InfoItem>
             <Styled.InfoLabel>Email</Styled.InfoLabel>
-            <Styled.InfoValue>{json.email}</Styled.InfoValue>
+            <Styled.InfoValue>{json.email || "Не указан"}</Styled.InfoValue>
           </Styled.InfoItem>
           {json.inn && (
             <Styled.InfoItem>
@@ -92,9 +72,6 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({ order, ope
 
       <Styled.Section>
         <Styled.SectionHeader>
-          <Styled.SectionIcon>
-            <EnvironmentOutlined />
-          </Styled.SectionIcon>
           <Styled.SectionTitle>Маршрут</Styled.SectionTitle>
         </Styled.SectionHeader>
         <Styled.InfoGrid>
@@ -122,9 +99,6 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({ order, ope
 
       <Styled.Section>
         <Styled.SectionHeader>
-          <Styled.SectionIcon>
-            <InboxOutlined />
-          </Styled.SectionIcon>
           <Styled.SectionTitle>Параметры груза</Styled.SectionTitle>
         </Styled.SectionHeader>
         <Styled.InfoGrid>
@@ -149,24 +123,10 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({ order, ope
             <Styled.InfoValue>{json.sizes.quantity} шт</Styled.InfoValue>
           </Styled.InfoItem>
         </Styled.InfoGrid>
-        {json.selectedCargo && json.selectedCargo.length > 0 && (
-          <>
-            <Styled.Divider />
-            <Styled.InfoLabel style={{ marginBottom: "12px", display: "block" }}>Тип груза</Styled.InfoLabel>
-            <Styled.CargoList>
-              {json.selectedCargo.map((cargo) => (
-                <Styled.CargoItem key={cargo.id}>{cargo.name}</Styled.CargoItem>
-              ))}
-            </Styled.CargoList>
-          </>
-        )}
       </Styled.Section>
 
       <Styled.Section>
         <Styled.SectionHeader>
-          <Styled.SectionIcon>
-            <CarOutlined />
-          </Styled.SectionIcon>
           <Styled.SectionTitle>Транспорт и сроки</Styled.SectionTitle>
         </Styled.SectionHeader>
         <Styled.InfoGrid>
@@ -186,6 +146,21 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({ order, ope
             <Styled.InfoValue>{orderDateInfo.text}</Styled.InfoValue>
           </Styled.InfoItem>
         </Styled.InfoGrid>
+      </Styled.Section>
+
+      <Styled.Section>
+        <Styled.SectionHeader>
+          <Styled.SectionTitle>Тип груза</Styled.SectionTitle>
+        </Styled.SectionHeader>
+        {json.selectedCargo && json.selectedCargo.length > 0 ? (
+          <Styled.CargoList>
+            {json.selectedCargo.map((cargo) => (
+              <Styled.CargoItem key={cargo.id}>{cargo.name}</Styled.CargoItem>
+            ))}
+          </Styled.CargoList>
+        ) : (
+          <Styled.InfoValue>Тип груза не указан</Styled.InfoValue>
+        )}
       </Styled.Section>
     </Styled.StyledModal>
   )
