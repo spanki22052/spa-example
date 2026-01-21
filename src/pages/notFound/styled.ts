@@ -7,13 +7,32 @@ export const NotFoundContainer = styled.div(({ theme }) => ({
   justifyContent: "center",
   minHeight: "100vh",
   backgroundColor: theme.colors.background,
-  padding: "20px"
+  padding: "20px",
+  boxSizing: "border-box",
+  "@media (max-width: 768px)": {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    padding: "16px",
+    height: "100dvh",
+    minHeight: "100dvh",
+    maxHeight: "100dvh",
+    overflow: "hidden"
+  }
 }))
 
 export const NotFoundContent = styled.div(({ theme }) => ({
   textAlign: "center",
   maxWidth: "600px",
-  width: "100%"
+  width: "100%",
+  boxSizing: "border-box",
+  "@media (max-width: 768px)": {
+    maxHeight: "calc(100dvh - 32px)",
+    overflowY: "auto",
+    overflowX: "hidden"
+  }
 }))
 
 export const NotFoundCode = styled.h1(({ theme }) => ({

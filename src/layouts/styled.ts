@@ -5,7 +5,11 @@ export const LayoutContainer = styled.div(({ theme }) => ({
   width: "100%",
   height: "100vh",
   overflow: "hidden",
-  backgroundColor: theme.colors.background
+  backgroundColor: theme.colors.background,
+  "@media (max-width: 768px)": {
+    height: "100dvh",
+    maxHeight: "100dvh"
+  }
 }))
 
 export const MainContent = styled.div<{ $sidebarCollapsed: boolean }>(({ $sidebarCollapsed, theme }) => ({
@@ -15,12 +19,15 @@ export const MainContent = styled.div<{ $sidebarCollapsed: boolean }>(({ $sideba
   backgroundColor: theme.colors.background,
   transition: "padding 0.3s cubic-bezier(0.4, 0, 0.2, 1), margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
   position: "relative",
+  boxSizing: "border-box",
   "@media (max-width: 768px)": {
     padding: "16px",
     paddingTop: "80px",
     width: "100%",
     marginLeft: 0,
-    transition: "none"
+    transition: "none",
+    height: "100dvh",
+    maxHeight: "100dvh"
   },
   "&::-webkit-scrollbar": {
     width: "8px"

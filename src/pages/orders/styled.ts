@@ -5,10 +5,13 @@ export const OrdersContent = styled.div({
   display: "flex",
   flexDirection: "column",
   width: "100%",
-  height: "calc(100vh - 64px)",
+  height: "100%",
   overflow: "hidden",
+  boxSizing: "border-box",
   "@media (max-width: 768px)": {
-    height: "calc(100vh - 32px)",
+    height: "100%",
+    maxHeight: "100%",
+    overflow: "hidden"
   }
 })
 
